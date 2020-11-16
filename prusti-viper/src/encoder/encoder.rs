@@ -1033,7 +1033,7 @@ impl<'v, 'tcx> Encoder<'v, 'tcx> {
             ty::TyKind::Int(ast::IntTy::I64) => scalar_value.to_i64().unwrap().into(),
             ty::TyKind::Int(ast::IntTy::I128) => {
                 match scalar_value {
-                    mir::interpret::Scalar::Raw { data, .. } => {
+                    mir::interpret::Scalar::Int { data, .. } => {
                         let val: i128 = with_sign(data, 128).try_into().unwrap();
                         val.into()
                     },
@@ -1042,7 +1042,7 @@ impl<'v, 'tcx> Encoder<'v, 'tcx> {
             },
             ty::TyKind::Int(ast::IntTy::Isize) => {
                 match scalar_value {
-                    mir::interpret::Scalar::Raw { data, .. } => {
+                    mir::interpret::Scalar::Int { data, .. } => {
                         let isize_bits = mem::size_of::<isize>() * 8;
                         let val: isize = with_sign(data, isize_bits.try_into().unwrap()).try_into().unwrap();
                         val.into()
@@ -1056,7 +1056,7 @@ impl<'v, 'tcx> Encoder<'v, 'tcx> {
             ty::TyKind::Uint(ast::UintTy::U64) => scalar_value.to_u64().unwrap().into(),
             ty::TyKind::Uint(ast::UintTy::U128) => {
                 match scalar_value {
-                    mir::interpret::Scalar::Raw { data, .. } => {
+                    mir::interpret::Scalar::Int { data, .. } => {
                         let val: u128 = data;
                         val.into()
                     },
@@ -1065,7 +1065,7 @@ impl<'v, 'tcx> Encoder<'v, 'tcx> {
             },
             ty::TyKind::Uint(ast::UintTy::Usize) => {
                 match scalar_value {
-                    mir::interpret::Scalar::Raw { data, .. } => {
+                    mir::interpret::Scalar::Int { data, .. } => {
                         let val: usize = data.try_into().unwrap();
                         val.into()
                     },
